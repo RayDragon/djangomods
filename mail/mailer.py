@@ -2,8 +2,8 @@ class GMailer():
 
     def __init__(self, email, password):
         self.data = {
-            "email_id": "",
-            "password": ""   
+            "email_id": email,
+            "password": password   
         }
    
     def send_mail(self, _from, _to, _body):
