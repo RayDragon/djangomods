@@ -10,6 +10,6 @@ class GMailer():
         import smtplib
         s = smtplib.SMTP('smtp.gmail.com', 587) 
         s.starttls() 
-        s.login(self.data['sender_email_id'], self.data["sender_email_id_password"]) 
+        s.login(self.data['email_id'], self.data["password"]) 
         s.sendmail(_from, _to, _body) 
         s.quit()
