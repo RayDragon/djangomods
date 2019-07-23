@@ -24,5 +24,16 @@ https://linknotremembered.google.com.in.whatever
     "sender's email address",
     "bluedragon.ray@gmail.com", 
     "I love your codes, please tell me how can i donate you some money :)")
+    
+    GMailer.send_html_mail(
+        ...,
+        ...,
+        'Body in HTML, string is required however django.shortcut.render can be also passed',
+        'Body if not html i.e. in text form',
+        subject=''
+    )
+    
     ```
+
+
 
