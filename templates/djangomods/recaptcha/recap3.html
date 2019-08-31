@@ -1,0 +1,26 @@
+<script src="https://www.google.com/recaptcha/api.js?render={{RECAP3.SITE_KEY}}"></script>
+<script>
+    var getRecapToken;
+    grecaptcha.ready(function () {
+        getRecapToken = function (action, callback = (token) => { console.log('Token not used yet'); }) {
+            grecaptcha.execute('{{RECAP3.SITE_KEY}}', { action: action }).then(function (token) {
+                callback(token);
+            });
+        }
+    });
+
+    $('.form_recap').submit(function () {
+        event.preventDefault();
+        console.log(event);
+        
+        let pid = event.srcElement.id;
+        console.log(pid);
+        let action = pid.slice(5);
+        
+        getRecapToken(action, (token) => {
+            $('#'+pid).prepend('<input type="hidden" name="token" value="' + token + '">');
+            $('#'+pid).prepend('<input type="hidden" name="action" value="' + action + '">');
+            $('#'+pid).unbind('submit').submit();
+        });
+    });
+</script>

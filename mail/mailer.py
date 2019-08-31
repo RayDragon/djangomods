@@ -1,6 +1,12 @@
 class GMailer():
 
-    def __init__(self, email, password):
+    def __init__(self, email='#', password='#'):
+        if email =='#':
+            # picking from settings.py
+            from django.conf import settings
+            mailer_setting = settings.SETTINGS_DJANGOMODS['MAILER']
+            email, password = mailer_setting['EMAIL_ID'], mailer_setting['EMAIL_PASSWORD']
+    
         self.data = {
             "email_id": email,
             "password": password   
