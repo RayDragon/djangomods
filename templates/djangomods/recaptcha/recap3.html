@@ -10,17 +10,56 @@
     });
 
     $('.form_recap').submit(function () {
+        // will do a post request, page reloads
         event.preventDefault();
         console.log(event);
-        
+
         let pid = event.srcElement.id;
         console.log(pid);
         let action = pid.slice(5);
-        
+
         getRecapToken(action, (token) => {
-            $('#'+pid).prepend('<input type="hidden" name="token" value="' + token + '">');
-            $('#'+pid).prepend('<input type="hidden" name="action" value="' + action + '">');
-            $('#'+pid).unbind('submit').submit();
+            $('#' + pid).prepend('<input type="hidden" name="token" value="' + token + '">');
+            $('#' + pid).prepend('<input type="hidden" name="action" value="' + action + '">');
+            $('#' + pid).unbind('submit').submit();
         });
     });
+
+    function getFormData($form) {
+        var unindexed_array = $form.serializeArray();
+        var indexed_array = {};
+
+        $.map(unindexed_array, function (n, i) {
+            indexed_array[n['name']] = n['value'];
+        });
+
+        return indexed_array;
+    }
+
+    $('.form_recap_back').submit(function () {
+        // prevent page reload, sends a ajax request to backend and calls the respective function
+        event.preventDefault();
+        // console.log(event);
+
+        let pid = event.srcElement.id;
+        // console.log(event.srcElement);
+        let action = pid.slice(5); // 'remove form_ from form id' 
+
+        
+        getRecapToken(action, (token) => {
+            $('#'+pid).prepend('<input type="hidden" name="recap_token" value="' + token + '">');
+            $('#'+pid).prepend('<input type="hidden" name="recap_action" value="' + action + '">');
+            // $('#'+pid).unbind('submit').submit();
+
+            data = getFormData($('#'+pid));
+            console.log(document.getElementById(pid).action);
+            $.post(document.getElementById(pid).action, data, (data)=>{
+                if(data.error) {
+                    window.alert(data.message);
+                }
+                console.log(data);
+                window['on_'+action](data);
+            }, 'json');
+        });
+    })
 </script>

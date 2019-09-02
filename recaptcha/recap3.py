@@ -6,11 +6,12 @@ def verify(request, min_score = 0.5):
                 'https://www.google.com/recaptcha/api/siteverify',
                 data={
                     'secret':settings.SETTINGS_RECAP['RECAP3']['SECRET_KEY'], 
-                    'response':request.POST.get('token')
+                    'response':request.POST.get('recap_token')
                 }
             )
     data = json.loads(a.text)
     if data['success']:
         if data['score'] >= min_score:
             return True
+    print(a.text)
     return False
