@@ -14,8 +14,7 @@ Except of that you may use this code for anything you want without my concern, a
 Send mail through your gmail account
 
 ```
-Note: You may will have to allow unknown origin to send mail from here:
-https://linknotremembered.google.com.in.whatever
+Note: You will have to setup two factor authentication and get password for app from gmail.
 ```
 1. Usage:
     ```python
